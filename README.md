@@ -6,7 +6,7 @@
 >
 > 打开这张图，把三部剧的家族、巨龙、战役和地图连起来看。
 
-**在线入口**：GitHub Pages 启用后，从仓库主页的 Pages 链接打开互动图。仓库中的 [`index.html`](./index.html) 是源文件，下载后在浏览器打开也可探索。
+**[点击进入互动关系图](https://huangdongnb.github.io/game-of-thrones-relationship-map/)** · 打开就能沿地图、剧情与人物关系探索。仓库中的 [`index.html`](./index.html) 是源文件，下载后在浏览器打开也可使用。
 
 ## 从哪条线开始？
 
