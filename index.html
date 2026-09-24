@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>权力的游戏关系图 | 冰与火 · 人物与疆域</title><meta name="description" content="从血龙狂舞到长夜之战，用人物、巨龙、家族血脉与维斯特洛地图探索三部剧的故事。">
+<style>
+:root{--ink:#eee7d9;--gold:#d7b578;--muted:#9baeb0;--fire:#c96d5c;--ice:#77a6bc}*{box-sizing:border-box}
+html,body{margin:0;background:#0b1214;color:var(--ink);font-family:system-ui,"Microsoft YaHei",sans-serif}body{background:radial-gradient(circle at 90% 1%,#38211d,transparent 34%),radial-gradient(circle at 0% 45%,#17313b,transparent 45%),#0b1214}
+button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:grid;grid-template-columns:385px 1fr;grid-template-rows:auto 1fr auto}
+header{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:15px 21px;border-bottom:1px solid #66533c;background:#101719ee}
+.brand small{font:700 10px Georgia,serif;letter-spacing:.26em;color:var(--gold)}.brand h1{font:26px Georgia,"Microsoft YaHei",serif;margin:4px 0}.brand p{font-size:11px;color:#a4b4b4;margin:0}
+.bar{display:flex;flex-wrap:wrap;gap:7px;align-items:center}.bar button,.tools button{border:1px solid #556669;background:#1b292c;color:#dedfd5;border-radius:17px;padding:7px 10px;font-size:11px}.bar button:hover,.bar button.on,.tools button:hover,.tools button.on{background:#4a3828;color:#ffe1a5;border-color:#dbb776}.bar input{background:#1b292c;color:#fff;border:1px solid #586669;outline:none;border-radius:16px;padding:8px 11px;font-size:11px;width:215px}
+aside{height:calc(100vh - 111px);min-height:700px;overflow:auto;border-right:1px solid #405052;background:#111b1dd9;padding:14px}.note{color:#abbabd;font-size:10px;line-height:1.55;margin:1px 0 12px}
+.panel{background:#121c1e;border:1px solid #435154;padding:10px;margin:0 0 12px}.panel h2{font:15px Georgia,"Microsoft YaHei",serif;color:#dec59a;margin:0 0 9px}.panel h2 small{float:right;color:#859b9b;font:10px Arial;margin-top:4px}
+.map{width:100%;height:360px;background:#142c35;border:1px solid #53717a}.map svg{width:100%;height:100%}.land{stroke:#82908a;stroke-width:1.1;cursor:pointer}.land:hover,.land.active{filter:brightness(1.45);stroke:#ffe2a4;stroke-width:2}.label{fill:#e1dfcf;font:9px Arial;text-anchor:middle;pointer-events:none}.sea{fill:#67939e;font:italic 12px Georgia}.mark{cursor:pointer}.mark circle{fill:#d5b67d;stroke:#101d20;stroke-width:1.4}.mark text{fill:#f7e6c8;font:8px Arial;paint-order:stroke;stroke:#102026;stroke-width:2}.mark.war circle{fill:#d5614a;stroke:#ffbf99}.geobox{min-height:90px;color:#afbdbb;font-size:11px;line-height:1.55;padding-top:9px}.geobox strong{color:#e7c890;display:block;font-size:13px}.keys{font:10px Arial;color:#adbdba;margin:5px 0}.keys i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#d5614a;margin-right:4px}.keys i.city{background:#d5b67d;margin-left:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}.story,.waritem{background:#233033;border:1px solid #566568;color:#e0e2d6;text-align:left;padding:8px;font-size:11px;border-radius:3px}.story:hover,.waritem:hover,.story.on,.waritem.on{background:#493828;border-color:#e1ba76}.story small,.waritem small{display:block;color:#9db4b5;font-size:9px;margin-top:3px}details{color:#a5b5b4;font-size:10px;line-height:1.55}details summary{cursor:pointer;color:#d9c08c}a{color:#b7d4d8}
+main{height:calc(100vh - 111px);min-height:700px;overflow:auto;position:relative;padding:13px 18px 35px;scroll-behavior:smooth}
+.tools{position:sticky;top:-13px;z-index:30;background:#101b1deb;backdrop-filter:blur(12px);padding:8px;border:1px solid #4b5b5e;display:flex;gap:6px;align-items:center;flex-wrap:wrap}.tools button{border-radius:3px;padding:5px 8px;font-size:10px}.tools span{color:#a7b3b2;font-size:10px}.tools .space{flex:1}.counts{font:10px Georgia;color:#c9af85}.intro{font-size:11px;color:#aabdbd;border-left:2px solid #c4a46f;padding-left:10px;line-height:1.5;margin:13px 0 18px}
+.era{margin:0 0 22px;scroll-margin-top:70px}.era.hidden{display:none}.era h2{font:20px Georgia,"Microsoft YaHei",serif;border-bottom:1px solid #93645d;margin:0 0 10px;padding:8px 0}.era.knight h2{border-color:#b99b60}.era.got h2{border-color:#6c9eaf}.era h2 small{color:#a8b6b2;font:10px Arial;margin-left:12px}.group{border:1px solid #3b4a4b;background:#172124e0;padding:9px;margin-bottom:10px;border-radius:4px}.group h3{font:12px Georgia,"Microsoft YaHei",serif;color:#c8b592;margin:0 0 8px}.group h3 small{color:#819697;margin-left:8px;font:9px Arial}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(159px,1fr));gap:8px}.card{min-height:91px;border:1px solid #566669;border-left:3px solid #bc6c5d;background:#202a2b;display:flex;border-radius:4px;overflow:hidden;position:relative;cursor:pointer;transition:.15s}.knight .card{border-left-color:#baa16d}.got .card{border-left-color:#78a6bb}.card:hover{transform:translateY(-2px);border-color:#e4c081}.card.selected{box-shadow:0 0 0 2px #eac88e;border-color:#f9d394;z-index:4}.card.near{border-color:#b0c0b2}.card.dim{opacity:.23;filter:grayscale(.6)}.portrait{width:65px;min-width:65px;position:relative;background:#28373b}.portrait img{width:100%;height:100%;object-fit:cover}.portrait small{position:absolute;bottom:2px;left:2px;background:#071214db;padding:2px;color:#e7cf9f;font:8px Arial}.ct{padding:6px 4px 3px 6px;min-width:0}.ct b{font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ct small{color:#e0bf8c;font-size:9px;display:block;margin:3px 0}.ct span{font-size:9px;color:#abb9b7;line-height:1.2}.badge{position:absolute;right:2px;top:2px;border:1px solid #b59a65;background:#152022dc;color:#e9ce97;border-radius:50%;font-size:11px;padding:1px}
+.overlay{position:absolute;inset:0;pointer-events:none;z-index:18;overflow:visible}.edge{fill:none;stroke-width:2.6;filter:drop-shadow(0 1px 2px #000)}.parent{stroke:#dbb776}.sibling{stroke:#a1b8bb;stroke-dasharray:3 3}.spouse{stroke:#e39a88;stroke-dasharray:8 4}.ally{stroke:#9dc5a5;stroke-dasharray:3 5}.enemy{stroke:#dd6d63;stroke-dasharray:11 4}.mentor{stroke:#81b4c8;stroke-dasharray:6 4}.lineage{stroke:#b9a3d1;stroke-dasharray:2 6}
+.detail{position:fixed;left:410px;right:20px;bottom:17px;z-index:35;max-height:48vh;overflow:auto;border:1px solid #d0aa6e;background:#172122f8;box-shadow:0 12px 32px #000c;padding:12px;display:none;backdrop-filter:blur(12px)}.detail.show{display:block}.dhead{display:flex;align-items:center;gap:11px}.dhead img{width:46px;height:54px;object-fit:cover}.dhead b{font-size:17px}.dhead small{display:block;color:#aababa;font-size:10px;margin-top:4px}.dhead button{margin-left:auto;border:0;background:transparent;color:#edd1a0;font-size:21px}.detail p{font-size:11px;color:#c2d0cb;line-height:1.5}.relchips{display:flex;flex-wrap:wrap;gap:5px}.relchips button{border:1px solid #607173;background:#2a393a;color:#e0e5df;border-radius:15px;font-size:10px;padding:5px 8px}.relchips button:hover{border-color:#d5b673}.legend{font-size:10px;color:#acbabc;display:flex;gap:9px;flex-wrap:wrap}.legend i{width:13px;display:inline-block;border-top:2px solid;margin-right:3px}
+footer{grid-column:1/-1;padding:9px 16px;border-top:1px solid #3b4e51;color:#9fb0b2;background:#101719;font-size:10px;display:flex;justify-content:space-between;gap:10px}
+@media(max-width:900px){.app{display:block}header{flex-wrap:wrap}aside,main{height:auto;min-height:0}.detail{left:12px;right:12px;bottom:10px;max-height:46vh}.map{height:320px}.bar input{width:170px}}@media(max-width:580px){.cards{grid-template-columns:repeat(2,minmax(140px,1fr))}.portrait{width:55px;min-width:55px}main{padding:10px}.brand h1{font-size:21px}}
+.card.dragon{border-left-color:#d69a56;background:linear-gradient(110deg,#3c2d27,#24282b)}.card.dragon .portrait{background:#472a22}.card.region-hit{box-shadow:0 0 0 2px #a7d7aa;border-color:#d1ebbd;opacity:1}.card.path-hit{box-shadow:0 0 0 2px #d9c7fa;border-color:#e9d5ff;opacity:1}.card .alias{color:#dfcb9b;font-size:9px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}.ct{padding-top:4px}.ct small{margin:2px 0}.edge.rider{stroke:#e1ad5c;stroke-dasharray:7 2;stroke-width:3.2}.edge.path{stroke:#edce91;stroke-width:4;filter:drop-shadow(0 0 5px #ffc165)}
+.relation-filters{width:100%;display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding-top:6px;border-top:1px solid #37474a}.relation-filters label{font-size:10px;display:flex;align-items:center;gap:3px;color:#cbd4cf;cursor:pointer}.relation-filters input{accent-color:#c9a368;margin:0}.relation-filters .hint{color:#81979b;font-size:10px}.tools button.isolate{border-color:#a8d8af;color:#d9f3d9}.tools button.pathmode{border-color:#dbc393;color:#fff0cb}
+.relation-filters label{padding:2px 5px;border-left:3px solid #88979b;background:#253032}.relation-filters label:nth-of-type(1){border-color:#dbb776}.relation-filters label:nth-of-type(2){border-color:#a1b8bb}.relation-filters label:nth-of-type(3){border-color:#e39a88}.relation-filters label:nth-of-type(4){border-color:#9dc5a5}.relation-filters label:nth-of-type(5){border-color:#dd6d63}.relation-filters label:nth-of-type(6){border-color:#81b4c8}.relation-filters label:nth-of-type(7){border-color:#b9a3d1}.relation-filters label:nth-of-type(8){border-color:#e1ad5c}.relation-filters label:has(input:not(:checked)){opacity:.43}
+.card{z-index:19}.card.selected{z-index:21}
+.detail .plot{margin:9px 0;padding:10px;border:1px solid #566461;background:#1b2a2a}.plot-title{font:12px Georgia,"Microsoft YaHei",serif;color:#e9c48e;margin:0 0 7px}.plot p{margin:0 0 8px}.beats{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:6px}.beats button{border:1px solid #6a7068;text-align:left;background:#273332;color:#e3e8dd;padding:8px;border-radius:3px;font-size:10px;line-height:1.4}.beats button.on,.beats button:hover{background:#614938;border-color:#e0b775}.beats b{display:block;color:#f5d5a2;font-size:11px;margin-bottom:3px}.detail .plot-summary{color:#a9c3c1;margin-bottom:7px}.geo-people{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.geo-people button{border:1px solid #687a73;color:#e8ebd9;background:#25413c;border-radius:12px;padding:3px 6px;font-size:9px}.geo-people button:hover{border-color:#ded3a3}.focus-counter{color:#c3ddbd;font-weight:700}.path-note{color:#decaa8;font-size:10px}.dragon-portrait{filter:drop-shadow(0 0 3px #bb703c)}.legend .rider{color:#e1ad5c}
+</style></head><body>
+<div class="app"><header><div class="brand"><small>THE REALMS · THREE AGES</small><h1>权力的游戏关系图</h1><p>三部影视作品 · 王朝血脉 · 家族阵营 · 战役与地理</p></div><div class="bar"><button data-era="all" class="on">全部时代</button><button data-era="hotd">龙之家族</button><button data-era="knight">七王国的骑士</button><button data-era="got">权力的游戏</button><input id="search" aria-label="搜索" placeholder="搜索姓名、家族、演员或地区"></div></header>
+<aside><p class="note">「七国」是历史称谓；三部剧的大部分时期是一个王国，不是七个现代独立国家。此图表达地区相对位置、海峡与行进方向，不是精确 GIS 地图或战场坐标。</p>
+<div class="panel"><h2>维斯特洛与狭海<small>点击探索地理</small></h2><div class="map"><svg viewBox="0 0 370 360" role="img" aria-label="维斯特洛地区相对方位图">
+<defs><pattern id="waves" width="13" height="13" patternUnits="userSpaceOnUse"><path d="M0 11Q4 8 8 11T16 11" stroke="#2c505b" stroke-width=".65" fill="none"/></pattern></defs><rect width="370" height="360" fill="url(#waves)"/>
+<path class="land" data-geo="beyond" fill="#395154" d="M82 0 166 0 183 30 170 53 191 70 171 83 93 77 74 42Z"/><path class="land" data-geo="north" fill="#465b54" d="M93 80 171 85 193 118 187 162 167 178 94 162 71 124Z"/><path class="land" data-geo="iron" fill="#5e5f4c" d="M42 195l15-12 8 12-10 11ZM38 224l12-12 11 12-12 11Z"/>
+<path class="land" data-geo="river" fill="#57594a" d="M93 166 166 180 199 209 179 240 97 240 73 210Z"/><path class="land" data-geo="vale" fill="#4d665a" d="M190 150 229 152 256 202 205 219 168 178Z"/>
+<path class="land" data-geo="west" fill="#675747" d="M69 214 98 241 96 284 66 290 42 258Z"/><path class="land" data-geo="crown" fill="#70544b" d="M181 242 206 217 230 234 221 273 174 277 161 258Z"/>
+<path class="land" data-geo="reach" fill="#516d51" d="M96 242 162 259 176 277 153 322 72 320 64 290 96 284Z"/><path class="land" data-geo="storm" fill="#506659" d="M177 280 223 276 239 312 211 334 152 323Z"/>
+<path class="land" data-geo="dorne" fill="#826a50" d="M151 325 211 337 196 360 90 360 70 325Z"/><path class="land" data-geo="essos" fill="#655e4a" d="M290 122 370 108 370 360 310 360 285 313 275 254 294 213 271 163Z"/><path class="land" data-geo="steps" fill="#75634e" d="M253 313q8-9 12 0l-7 8q-9 1-5-8Zm17 12q9-4 8 5l-8 3Z"/>
+<path d="M115 163Q144 190 130 219Q148 226 181 239M93 249Q135 238 172 262" stroke="#7799a5" stroke-width="2" fill="none"/>
+<text class="label" x="130" y="43">塞外</text><text class="label" x="131" y="123">北境</text><text class="label" x="135" y="205">河间地</text><text class="label" x="221" y="186">谷地</text><text class="label" x="77" y="270">西境</text><text class="label" x="124" y="288">河湾地</text><text class="label" x="195" y="257">王领</text><text class="label" x="204" y="307">风暴地</text><text class="label" x="141" y="349">多恩</text><text class="label" x="325" y="206">厄斯索斯</text><text class="sea" x="243" y="93">狭海</text><text class="sea" x="9" y="154">落日海</text>
+<g class="mark" data-place="wall"><circle cx="130" cy="80" r="3"/><text x="137" y="75">长城</text></g><g class="mark" data-place="winterfell"><circle cx="138" cy="135" r="3"/><text x="146" y="131">临冬城</text></g><g class="mark" data-place="twins"><circle cx="112" cy="185" r="3"/><text x="69" y="180">孪河城</text></g><g class="mark" data-place="harrenhal"><circle cx="166" cy="220" r="3"/><text x="116" y="224">赫伦堡</text></g><g class="mark" data-place="kings"><circle cx="189" cy="260" r="3"/><text x="199" y="257">君临</text></g><g class="mark" data-place="dragonstone"><circle cx="250" cy="253" r="3"/><text x="258" y="248">龙石岛</text></g><g class="mark" data-place="oldtown"><circle cx="85" cy="326" r="3"/><text x="44" y="341">旧镇</text></g><g class="mark" data-place="ashford"><circle cx="146" cy="316" r="3"/><text x="150" y="329">阿什福德</text></g><g class="mark" data-place="storms"><circle cx="217" cy="313" r="3"/><text x="224" y="312">风息堡</text></g><g class="mark" data-place="braavos"><circle cx="310" cy="158" r="3"/><text x="316" y="150">布拉佛斯</text></g>
+<g class="mark war" data-battle="rooks"><circle cx="207" cy="243" r="4"/><text x="216" y="239">鸦栖堡</text></g><g class="mark war" data-battle="trident"><circle cx="160" cy="207" r="4"/><text x="93" y="201">三叉戟河</text></g><g class="mark war" data-battle="blackwater"><circle cx="187" cy="271" r="4"/><text x="196" y="287">黑水河</text></g><g class="mark war" data-battle="stepwar"><circle cx="258" cy="319" r="4"/><text x="272" y="320">石阶列岛</text></g>
+<g class="mark war" data-battle="burning" aria-label="焚烧磨坊之战"><title>焚烧磨坊之战</title><circle cx="177" cy="212" r="4"/></g><g class="mark war" data-battle="ashfordtrial" aria-label="阿什福德七子审判"><title>阿什福德七子审判</title><circle cx="147" cy="306" r="4"/></g><g class="mark war" data-battle="redwedding" aria-label="红色婚礼"><title>红色婚礼 · 孪河城</title><circle cx="113" cy="192" r="4"/></g><g class="mark war" data-battle="bastards" aria-label="私生子之战"><title>私生子之战 · 临冬城</title><circle cx="148" cy="143" r="4"/></g><g class="mark war" data-battle="winterfellwar" aria-label="临冬城之战"><title>临冬城之战 · 长夜</title><circle cx="130" cy="144" r="4"/></g><g class="mark war" data-battle="fall" aria-label="君临陷落"><title>君临陷落</title><circle cx="202" cy="270" r="4"/></g>
+</svg></div><div class="keys"><i></i>战役或冲突<i class="city"></i>城堡或城市</div><div class="geobox" id="geoInfo"><strong>点击地图探索</strong>地区、城堡与战役都可选择；可查看辖区、家族势力与事件。</div></div>
+<div class="panel"><h2>沿情节探索<small>剧情阶段 · 人物与巨龙</small></h2><div id="stories" class="grid2"></div></div><div class="panel"><h2>主要战役与转折<small>剧情经过 · 相关角色</small></h2><div id="battles" class="grid2"></div></div>
+<div class="panel"><details><summary>照片、资料与准确性说明</summary><p>角色或演员照片通过 <a href="https://www.tvmaze.com/api" target="_blank" rel="noopener">TVmaze 公开剧集演员资料</a>按作品和演员姓名对应；带“演员照”标注的不是剧照。无匹配、图片失效或断网时显示原创矢量人物插画并明确标注。演员照片版权归各自权利人；公开再发布前请确认使用授权。</p><p>演员与作品核对：<a href="https://www.hbo.com/house-of-the-dragon" target="_blank" rel="noopener">HBO《龙之家族》</a>、<a href="https://press.wbd.com/us/media-release/hbo-original-drama-series-knight-seven-kingdoms-debuts-january-18" target="_blank" rel="noopener">HBO《七王国的骑士》</a>、<a href="https://www.hbo.com/game-of-thrones" target="_blank" rel="noopener">HBO《权力的游戏》</a>。跨时代“后裔”连线不意味着直接父子关系。内容有剧情剧透。</p></details></div></aside>
+<main id="main"><div class="tools"><span>关系视图：</span><button class="on" data-mode="focus">人物邻居</button><button data-mode="story">事件关系</button><button data-mode="all">全部连线</button><button id="depth">一层关系</button><button id="isolate">只看高亮</button><button id="path">两人关系路径</button><button id="clear">清除聚焦</button><span class="space"></span><span id="counter" class="counts"></span><div class="relation-filters" id="filters"><span>线型筛选：</span><label><input type="checkbox" value="parent" checked>亲子</label><label><input type="checkbox" value="sibling" checked>兄妹</label><label><input type="checkbox" value="spouse" checked>婚姻/情感</label><label><input type="checkbox" value="ally" checked>同盟</label><label><input type="checkbox" value="enemy" checked>敌对</label><label><input type="checkbox" value="mentor" checked>师徒</label><label><input type="checkbox" value="lineage" checked>隔代血脉</label><label><input type="checkbox" value="rider" checked>巨龙与骑手</label><span class="hint">路径只沿已勾选关系寻找；虚线表示隔代或非血缘关系。</span></div></div><p class="intro">选地图可高亮籍贯或主要活动地相关人物；选剧情或战役可逐阶段聚焦。点击人物看直接关系。线条默认只绘制选中范围，减少交叉。</p><div id="content"></div><div class="detail" id="detail"></div></main>
+<footer><span>三部电视剧 · 含剧透 · 地图为方位示意图，非精确地理坐标 · 在线匹配演员照片，离线显示明确标注的插画</span><span>总计 <b id="total"></b> · <b id="linkTotal"></b> 条已录关系</span></footer></div>
+<script>
+// id | 中文名 | 英文角色名 | 分组 | 家族 | 地区 | 身份 | 演员 | 说明；分组前缀区分时代
+const raw=[
+`viserys1|韦赛里斯一世|Viserys I Targaryen|H·黑党与王室|坦格利安|王领|♛ 国王|Paddy Considine|指定长女雷妮拉继承铁王座，再婚后继承危机加深。`,
+`rhaenyra|雷妮拉|Rhaenyra Targaryen|H·黑党与王室|坦格利安|龙石岛|♛ 女王宣称者|Emma D'Arcy|韦赛里斯之女，与异母弟伊耿二世争夺铁王座。`,
+`daemon|戴蒙|Daemon Targaryen|H·黑党与王室|坦格利安|王领|🐉 亲王·龙骑士|Matt Smith|韦赛里斯之弟，也是雷妮拉叔父兼丈夫。`,
+`jace|杰卡里斯|Jacaerys Velaryon|H·黑党与王室|瓦列利安/坦格利安|龙石岛|★ 黑党王储|Harry Collett|雷妮拉长子，前往北境与谷地寻求同盟。`,
+`luke|路斯里斯|Lucerys Velaryon|H·黑党与王室|瓦列利安/坦格利安|龙石岛|★ 王子|Elliot Grihault|雷妮拉次子，在风息堡出使后被瓦格哈尔追逐。`,
+`aegon3|伊耿三世（幼年）|Aegon III Targaryen|H·黑党与王室|坦格利安|龙石岛|★ 雷妮拉之子||与伊耿二世、伊耿五世不是同一人物。`,
+`baela|贝拉|Baela Targaryen|H·黑党与王室|坦格利安|潮头岛|🐉 公主|Bethany Antonia|戴蒙与兰娜之女，巨龙月舞的骑手。`,
+`rhaena|雷娜|Rhaena Targaryen|H·黑党与王室|坦格利安|潮头岛/谷地|★ 公主|Phoebe Campbell|戴蒙与兰娜之女、贝拉的孪生姐妹。`,
+`rhaenys|雷妮丝|Rhaenys Targaryen|H·潮头岛|坦格利安|潮头岛|🐉 无冕女王|Eve Best|科利斯之妻；在王位继承中曾被排除。`,
+`corlys|科利斯·瓦列利安|Corlys Velaryon|H·潮头岛|瓦列利安|潮头岛|★ 海蛇·海军统帅|Steve Toussaint|海上强权，支持雷妮拉的黑党。`,
+`laenor|兰诺|Laenor Velaryon|H·潮头岛|瓦列利安|潮头岛|★ 雷妮拉前夫|John Macmillan|雷妮丝与科利斯之子；雷妮拉前三子的名义父亲。`,
+`laena|兰娜|Laena Velaryon|H·潮头岛|瓦列利安|潮头岛|🐉 戴蒙前妻|Nanna Blondell|贝拉与雷娜之母，曾骑乘瓦格哈尔。`,
+`addam|亚当·瓦列利安|Addam of Hull|H·潮头岛|瓦列利安|潮头岛|🐉 海烟骑手|Clinton Liberty|科利斯之子，被海烟认可的龙种。`,
+`alyn|亚林·瓦列利安|Alyn of Hull|H·潮头岛|瓦列利安|潮头岛|★ 水手|Abubakar Salim|亚当之兄弟、科利斯之子。`,
+`alicent|艾莉森|Alicent Hightower|H·绿党|海塔尔|旧镇→君临|★ 王后|Olivia Cooke|韦赛里斯第二任妻子，伊耿二世和伊蒙德之母。`,
+`otto|奥托·海塔尔|Otto Hightower|H·绿党|海塔尔|旧镇|★ 国王之手|Rhys Ifans|艾莉森之父，推动外孙伊耿二世继位。`,
+`aegon2|伊耿二世|Aegon II Targaryen|H·绿党|坦格利安|君临|♛ 国王|Tom Glynn-Carney|韦赛里斯与艾莉森长子；不是《七王国的骑士》的伊戈。`,
+`aemond|伊蒙德|Aemond Targaryen|H·绿党|坦格利安|君临|🐉 亲王|Ewan Mitchell|伊耿二世之弟，巨龙瓦格哈尔的骑手。`,
+`helaena|海伦娜|Helaena Targaryen|H·绿党|坦格利安|君临|♛ 王后|Phia Saban|伊耿二世的妹妹兼妻子。`,
+`criston|克里斯顿·科尔|Criston Cole|H·绿党|科尔|风暴地→王领|★ 御林铁卫|Fabien Frankel|由雷妮拉身边转向艾莉森与绿党。`,
+`gwayne|格韦恩·海塔尔|Gwayne Hightower|H·绿党|海塔尔|旧镇|★ 骑士|Freddie Fox|奥托之子、艾莉森之兄。`,
+`mysaria|弥赛丽亚|Mysaria|H·领主与龙种|情报网|厄斯索斯→君临|★ 情报人物|Sonoya Mizuno|后来为雷妮拉提供君临情报。`,
+`larys|拉里斯·斯壮|Larys Strong|H·领主与龙种|斯壮|赫伦堡/君临|★ 情报人物|Matthew Needham|以情报和密谋影响绿党。`,
+`harwin|哈尔温·斯壮|Harwin Strong|H·领主与龙种|斯壮|赫伦堡|★ 城防队长|Ryan Corr|与雷妮拉关系密切，被普遍认为是她前三子的生父。`,
+`alys|亚莉丝·河文|Alys Rivers|H·领主与龙种|河间地|赫伦堡|★ 神秘人物|Gayle Rankin|居住在赫伦堡，与戴蒙的幻象剧情有关。`,
+`hugh|休·铁锤|Hugh Hammer|H·领主与龙种|龙种|君临→龙石岛|🐉 龙骑士|Kieran Bew|平民出身的龙种，骑乘沃米索尔。`,
+`ulf|乌尔夫·怀特|Ulf White|H·领主与龙种|龙种|君临→龙石岛|🐉 龙骑士|Tom Bennett|平民出身的龙种，骑乘银翼。`,
+`cregan|克雷根·史塔克|Cregan Stark|H·领主与龙种|史塔克|北境|★ 北境领主|Tom Taylor|杰卡里斯寻求的北境盟友。`,
+`borros|博洛斯·拜拉席恩|Borros Baratheon|H·领主与龙种|拜拉席恩|风息堡|★ 领主|Roger Evans|路斯里斯与伊蒙德出使时争取的领主。`,
+`jason|杰森·兰尼斯特|Jason Lannister|H·领主与龙种|兰尼斯特|西境|★ 领主|Jefferson Hall|凯岩城领主，支持绿党。`,
+`dunk|高个邓肯|Ser Duncan the Tall|K·邓克与伊戈|平民/骑士|七国游历|★ 雇佣骑士|Peter Claffey|伊戈的师父，后来成为御林铁卫队长。`,
+`egg|伊戈（伊耿五世）|Egg|K·邓克与伊戈|坦格利安|盛夏厅/七国|♛ 王子·未来国王|Dexter Sol Ansell|梅卡之子，日后成为伊耿五世，与伊耿二世相隔数代。`,
+`arlan|阿兰爵士|Ser Arlan of Pennytree|K·邓克与伊戈|平民骑士|七国游历|★ 邓肯的师父|Danny Webb|抚养并训练邓肯的雇佣骑士。`,
+`tanselle|坦塞尔|Tanselle|K·邓克与伊戈|艺人|阿什福德|★ 木偶艺人|Tanzyn Crawford|亚历昂袭击她，引发邓肯与王室冲突。`,
+`pate|钢铁佩特|Steely Pate|K·邓克与伊戈|工匠|阿什福德|铁匠|Youssef Kerkour|为邓肯准备比武装备。`,
+`maekar|梅卡|Maekar Targaryen|K·王室与比武场|坦格利安|风暴地·盛夏厅|♛ 亲王·后来的国王|Sam Spruell|伊戈之父、贝勒之弟；日后成为梅卡一世。`,
+`baelor|贝勒·破矛者|Baelor Targaryen|K·王室与比武场|坦格利安|龙石岛/君临|★ 王储|Bertie Carvel|伊戈的伯父，为邓肯参加七子审判；生前并未登基。`,
+`aerion|亚历昂·明焰|Aerion Targaryen|K·王室与比武场|坦格利安|盛夏厅|★ 王子|Finn Bennett|伊戈的兄长，袭击坦塞尔。`,
+`daeron|戴伦·醉鬼|Daeron Targaryen|K·王室与比武场|坦格利安|盛夏厅|王子|Henry Ashton|伊戈的兄长。`,
+`lyonel|莱昂内尔·拜拉席恩|Lyonel Baratheon|K·王室与比武场|拜拉席恩|风暴地|★ 欢笑风暴|Daniel Ings|风息堡继承人，为邓肯一方出战。`,
+`raymun|雷蒙·佛索威|Raymun Fossoway|K·王室与比武场|佛索威|河湾地|骑士|Shaun Thomas|为邓肯一方出战。`,
+`steffon|史蒂芬·佛索威|Steffon Fossoway|K·王室与比武场|佛索威|河湾地|骑士|Edward Ashley|其临阵选择使佛索威家族产生分歧。`,
+`plummer|普卢默|Plummer|K·王室与比武场|比武场管理者|阿什福德|管事|Tom Vaughan-Lawlor|负责阿什福德比武场安排。`,
+`manfred|曼弗雷德·唐德利恩|Manfred Dondarrion|K·王室与比武场|唐德利恩|风暴地|骑士|Daniel Monks|阿什福德比武大会的参赛骑士。`,
+`ned|艾德·史塔克|Eddard Stark|G·史塔克与北境|史塔克|北境|★ 北境守护|Sean Bean|莱安娜之兄，把外甥琼恩当私生子抚养。`,
+`catelyn|凯特琳·史塔克|Catelyn Stark|G·史塔克与北境|徒利/史塔克|河间地→北境|★ 北境夫人|Michelle Fairley|艾德之妻，罗柏等五个孩子的母亲。`,
+`robb|罗柏·史塔克|Robb Stark|G·史塔克与北境|史塔克|北境|♛ 北境之王|Richard Madden|艾德长子，率北境起兵。`,
+`sansa|珊莎·史塔克|Sansa Stark|G·史塔克与北境|史塔克|北境|♛ 后来的北境女王|Sophie Turner|经过君临与临冬城的权力斗争，最终统治独立北境。`,
+`arya|艾莉亚·史塔克|Arya Stark|G·史塔克与北境|史塔克|北境/布拉佛斯|★ 战士|Maisie Williams|艾德次女，曾接受无面者训练。`,
+`bran|布兰·史塔克|Bran Stark|G·史塔克与北境|史塔克|北境→六国|♛ 六国国王|Isaac Hempstead Wright|艾德之子，成为三眼乌鸦并被推举为六国之王。`,
+`rickon|瑞肯·史塔克|Rickon Stark|G·史塔克与北境|史塔克|北境|艾德幼子|Art Parkinson|在私生子之战前遭波顿家族控制。`,
+`jon|琼恩·雪诺|Jon Snow|G·史塔克与北境|坦格利安/史塔克|北境/长城|♛ 北境之王|Kit Harington|电视剧中本名伊耿·坦格利安，雷加与莱安娜之子。`,
+`lyanna|莱安娜·史塔克|Lyanna Stark|G·史塔克与北境|史塔克|北境|★ 琼恩生母|Aisling Franciosi|与雷加秘密结婚，生下琼恩。`,
+`theon|席恩·葛雷乔伊|Theon Greyjoy|G·史塔克与北境|葛雷乔伊|铁群岛→北境|★ 继承人|Alfie Allen|在史塔克家长大，经历背叛与救赎。`,
+`brienne|布蕾妮|Brienne of Tarth|G·史塔克与北境|塔斯|风暴地|★ 骑士|Gwendoline Christie|曾效忠凯特琳，后来护卫珊莎与艾莉亚。`,
+`tormund|托蒙德|Tormund Giantsbane|G·史塔克与北境|自由民|塞外|自由民领袖|Kristofer Hivju|与琼恩结盟对抗异鬼。`,
+`cersei|瑟曦·兰尼斯特|Cersei Lannister|G·兰尼斯特与君临|兰尼斯特|西境→君临|♛ 王后·后来的女王|Lena Headey|劳勃王后、詹姆的孪生姐姐与情人。`,
+`jaime|詹姆·兰尼斯特|Jaime Lannister|G·兰尼斯特与君临|兰尼斯特|西境→君临|★ 御林铁卫|Nikolaj Coster-Waldau|瑟曦的孪生弟弟，杀死疯王伊里斯二世。`,
+`tyrion|提利昂·兰尼斯特|Tyrion Lannister|G·兰尼斯特与君临|兰尼斯特|西境→君临|★ 国王/女王之手|Peter Dinklage|泰温之子，后来辅佐丹妮莉丝。`,
+`tywin|泰温·兰尼斯特|Tywin Lannister|G·兰尼斯特与君临|兰尼斯特|西境|★ 凯岩城领主|Charles Dance|瑟曦、詹姆、提利昂之父。`,
+`joffrey|乔佛里|Joffrey Baratheon|G·兰尼斯特与君临|兰尼斯特（对外称拜拉席恩）|君临|♛ 在位国王|Jack Gleeson|公开是劳勃之子，实为瑟曦与詹姆所生。`,
+`tommen|托曼|Tommen Baratheon|G·兰尼斯特与君临|兰尼斯特（对外称拜拉席恩）|君临|♛ 在位国王|Dean-Charles Chapman|乔佛里之弟，生父实为詹姆。`,
+`margaery|玛格丽·提利尔|Margaery Tyrell|G·兰尼斯特与君临|提利尔|河湾地→君临|♛ 王后|Natalie Dormer|通过婚姻把高庭带入王室权力中心。`,
+`robert|劳勃·拜拉席恩|Robert Baratheon|G·拜拉席恩与河间地|拜拉席恩|风暴地→君临|♛ 在位国王|Mark Addy|推翻坦格利安王朝；死后王位争夺爆发。`,
+`stannis|史坦尼斯·拜拉席恩|Stannis Baratheon|G·拜拉席恩与河间地|拜拉席恩|龙石岛|♛ 王位宣称者|Stephen Dillane|劳勃之弟，声称拥有合法继承权。`,
+`renly|蓝礼·拜拉席恩|Renly Baratheon|G·拜拉席恩与河间地|拜拉席恩|风暴地|♛ 王位宣称者|Gethin Anthony|劳勃与史坦尼斯的弟弟。`,
+`davos|戴佛斯·席渥斯|Davos Seaworth|G·拜拉席恩与河间地|席渥斯|龙石岛|★ 顾问|Liam Cunningham|先辅佐史坦尼斯，后来帮助琼恩。`,
+`melisandre|梅丽珊卓|Melisandre|G·拜拉席恩与河间地|红袍祭司|厄斯索斯→龙石岛|★ 宗教顾问|Carice van Houten|信奉光之王，支持史坦尼斯。`,
+`edmure|艾德慕·徒利|Edmure Tully|G·拜拉席恩与河间地|徒利|河间地|领主|Tobias Menzies|凯特琳的弟弟，奔流城继承人。`,
+`walder|瓦德·佛雷|Walder Frey|G·拜拉席恩与河间地|佛雷|孪河城|★ 领主|David Bradley|红色婚礼背叛史塔克与徒利。`,
+`aerys|伊里斯二世（疯王）|Aerys II Targaryen|G·龙裔与厄斯索斯|坦格利安|君临|♛ 末代坦格利安国王|David Rintoul|雷加、韦赛里斯与丹妮莉丝之父。`,
+`rhaegar|雷加·坦格利安|Rhaegar Targaryen|G·龙裔与厄斯索斯|坦格利安|龙石岛|★ 王储|Wilf Scolding|伊里斯之子、琼恩生父、丹妮莉丝之兄。`,
+`daenerys|丹妮莉丝|Daenerys Targaryen|G·龙裔与厄斯索斯|坦格利安|厄斯索斯→龙石岛|♛🐉 女王宣称者|Emilia Clarke|伊耿五世的曾孙女，流亡后返回争夺铁王座。`,
+`viserys3|韦赛里斯（三世）|Viserys Targaryen|G·龙裔与厄斯索斯|坦格利安|厄斯索斯|♛ 王位宣称者|Harry Lloyd|丹妮莉丝的哥哥，不是《龙之家族》的韦赛里斯一世。`,
+`jorah|乔拉·莫尔蒙|Jorah Mormont|G·龙裔与厄斯索斯|莫尔蒙|北境→厄斯索斯|★ 流亡骑士|Iain Glen|长期追随丹妮莉丝。`,
+`missandei|弥桑黛|Missandei|G·龙裔与厄斯索斯|纳斯人|厄斯索斯|★ 顾问|Nathalie Emmanuel|丹妮莉丝的翻译与亲密伙伴。`,
+`greyworm|灰虫子|Grey Worm|G·龙裔与厄斯索斯|无垢者|厄斯索斯→七国|★ 无垢者统帅|Jacob Anderson|丹妮莉丝的军队指挥官，与弥桑黛相爱。`,
+`drogo|卓戈·卡奥|Khal Drogo|G·龙裔与厄斯索斯|多斯拉克|厄斯索斯|★ 卡奥|Jason Momoa|丹妮莉丝的第一任丈夫。`,
+`varys|瓦里斯|Varys|G·龙裔与厄斯索斯|情报网|君临|★ 情报总管|Conleth Hill|服务过多代统治者的情报人物。`,
+`littlefinger|小指头·培提尔|Petyr Baelish|G·龙裔与厄斯索斯|贝里席|河间地→君临|★ 密谋者|Aidan Gillen|利用金融、联姻和情报操纵贵族斗争。`,
+`balon|巴隆·葛雷乔伊|Balon Greyjoy|G·铁群岛与长夜|葛雷乔伊|铁群岛|♛ 铁群岛国王|Patrick Malahide|席恩与雅拉之父，五王之战中的第五位王。`,
+`yara|雅拉·葛雷乔伊|Yara Greyjoy|G·铁群岛与长夜|葛雷乔伊|铁群岛|★ 舰队领袖|Gemma Whelan|席恩的姐姐，后来与丹妮莉丝结盟。`,
+`euron|攸伦·葛雷乔伊|Euron Greyjoy|G·铁群岛与长夜|葛雷乔伊|铁群岛|♛ 后来的铁群岛国王|Pilou Asbæk|雅拉与席恩的叔父，不属于五王之战初期的五王。`,
+`nightking|夜王|Night King|G·铁群岛与长夜|异鬼|塞外|★ 亡者军团统帅|Vladimir Furdik|电视剧中的异鬼领袖，生者共同敌人。`,
+`sam|山姆威尔·塔利|Samwell Tarly|G·铁群岛与长夜|塔利|河湾地→长城|★ 守夜人|John Bradley|琼恩好友，参与发现雷加婚姻的关键记录。`,
+`gilly|吉莉|Gilly|G·铁群岛与长夜|自由民|塞外→旧镇|山姆的伴侣|Hannah Murray|与山姆在旧镇找到关于雷加的记录。`
+];
+raw.push(
+`orwyle|欧维尔大学士|Grand Maester Orwyle|H·推动剧情的配角|学城/御前会议|君临|大学士|Kurt Egyiawan|韦赛里斯病重和王位继承危机期间的宫廷大学士。`,
+`tyland|泰兰·兰尼斯特|Tyland Lannister|H·推动剧情的配角|兰尼斯特|西境→君临|御前会议成员|Jefferson Hall|杰森的孪生兄弟，负责绿党的财务与外交。`,
+`jeyne|简妮·艾林|Jeyne Arryn|H·推动剧情的配角|艾林|谷地·鹰巢城|谷地守护者|Amanda Collin|同意支持雷妮拉，但要求龙的保护。`,
+`simon|西蒙·斯壮|Simon Strong|H·推动剧情的配角|斯壮|河间地·赫伦堡|赫伦堡城主|Simon Russell Beale|戴蒙驻扎赫伦堡期间的主人。`,
+`vaemond|维蒙德·瓦列利安|Vaemond Velaryon|H·推动剧情的配角|瓦列利安|潮头岛|继承权争议者|Wil Johnson|就潮头岛继承提出挑战，并指责雷妮拉孩子的身世。`,
+`crabfeeder|克拉加斯·蟹饵王|Craghas Drahar|H·推动剧情的配角|三女儿王国势力|石阶列岛|海盗首领|Daniel Scott-Smith|截断海路，促使戴蒙与科利斯对石阶列岛发动战争。`,
+`harrold|哈罗德·维斯特林|Harrold Westerling|H·推动剧情的配角|御林铁卫|君临|御林铁卫队长|Graham McTavish|不愿在韦赛里斯死后直接执行绿党的继位行动。`,
+`jasper|贾斯帕·威尔德|Jasper Wylde|H·推动剧情的配角|威尔德|风暴地→君临|法务大臣|Paul Kennedy|绿党御前会议中的政治人物。`,
+`aeronbracken|埃隆·布雷肯|Aeron Bracken|H·推动剧情的配角|布雷肯|河间地|布雷肯家骑士|Ryan Kopel|与布莱伍德家族争执边界石，引发焚烧磨坊的流血冲突。`,
+`davosblackwood|戴佛斯·布莱伍德|Davos Blackwood|H·推动剧情的配角|布莱伍德|河间地|布莱伍德家年轻骑士|Kieran Burton|与埃隆·布雷肯围绕领地边界发生冲突。`,
+`valarr|瓦拉尔·坦格利安|Valarr Targaryen|K·推动剧情的配角|坦格利安|龙石岛|贝勒之子·王孙|Oscar Morgan|贝勒·破矛者之子，参加阿什福德比武大会。`,
+`humfrey|汉弗莱·比斯伯里|Humfrey Beesbury|K·推动剧情的配角|比斯伯里|河湾地|骑士|Danny Collins|阿什福德的参赛骑士，与亚历昂发生冲突。`,
+`rafe|拉芙|Rafe|K·推动剧情的配角|邓肯的童年记忆|回忆场景|回忆人物|Chloe Lea|在邓肯往事的闪回中出场。`,
+`hodor|阿多|Hodor|G·推动剧情的配角|史塔克家仆|北境|布兰的护卫|Kristian Nairn|保护布兰逃离临冬城，他名字的来源与命运紧密相连。`,
+`osha|欧莎|Osha|G·推动剧情的配角|自由民|塞外→北境|瑞肯的保护者|Natalia Tena|帮助布兰和瑞肯在临冬城陷落后逃亡。`,
+`ramsay|拉姆斯·波顿|Ramsay Bolton|G·推动剧情的配角|波顿|北境·恐怖堡|波顿家继承人|Iwan Rheon|囚禁席恩并控制临冬城，成为私生子之战的主要敌人。`,
+`roose|卢斯·波顿|Roose Bolton|G·推动剧情的配角|波顿|北境·恐怖堡|北境领主|Michael McElhatton|红色婚礼的关键背叛者之一，后来成为北境守护。`,
+`talisa|塔丽莎|Talisa Stark|G·推动剧情的配角|医者/史塔克王后|河间地随军|罗柏之妻|Oona Chaplin|罗柏选择与她结婚，引发与佛雷家族联姻协议的破裂。`,
+`lysa|莱莎·艾林|Lysa Arryn|G·推动剧情的配角|徒利/艾林|谷地·鹰巢城|谷地夫人|Kate Dickie|凯特琳之妹，谷地政治与小指头计划的关键人物。`,
+`robin|罗宾·艾林|Robin Arryn|G·推动剧情的配角|艾林|谷地·鹰巢城|谷地领主|Lino Facioli|莱莎之子，其幼年统治使谷地摄政成为争夺焦点。`,
+`oberyn|奥柏伦·马泰尔|Oberyn Martell|G·推动剧情的配角|马泰尔|多恩·阳戟城|红毒蛇·亲王|Pedro Pascal|为姐姐伊莉亚之死向魔山寻仇。`,
+`ellaria|艾拉莉亚·沙德|Ellaria Sand|G·推动剧情的配角|沙德/多恩|多恩|奥柏伦的伴侣|Indira Varma|奥柏伦死后卷入多恩王室的复仇政治。`,
+`olenna|奥莲娜·提利尔|Olenna Tyrell|G·推动剧情的配角|提利尔|河湾地·高庭|荆棘女王|Diana Rigg|玛格丽祖母，以政治手腕维护提利尔家族。`,
+`loras|洛拉斯·提利尔|Loras Tyrell|G·推动剧情的配角|提利尔|河湾地·高庭|百花骑士|Finn Jones|玛格丽之兄，曾与蓝礼相爱。`,
+`highsparrow|大麻雀|High Sparrow|G·推动剧情的配角|七神教会|君临|宗教领袖|Jonathan Pryce|组织信仰武装，控制王后与君临政治。`,
+`qyburn|科本|Qyburn|G·推动剧情的配角|前学士/御前会议|君临|瑟曦的顾问|Anton Lesser|帮助瑟曦发展情报和野火计划，并复活魔山。`,
+`bronn|波隆|Bronn|G·推动剧情的配角|佣兵|君临/河湾地|雇佣骑士|Jerome Flynn|先后为提利昂与詹姆效力，多次改变关键人物的命运。`,
+`podrick|波德瑞克|Podrick Payne|G·推动剧情的配角|派恩|君临→北境|布蕾妮的侍从|Daniel Portman|原为提利昂侍从，后来随布蕾妮保护史塔克姐妹。`,
+`hound|桑铎·克里冈|Sandor Clegane|G·推动剧情的配角|克里冈|西境→君临|猎狗|Rory McCann|保护过珊莎与艾莉亚，最终与兄长魔山决斗。`,
+`mountain|格雷果·克里冈|Gregor Clegane|G·推动剧情的配角|克里冈|西境|魔山|Hafþór Júlíus Björnsson|为兰尼斯特效力的残暴武士，奥柏伦复仇的对象。`,
+`jaqen|贾昆·赫加尔|Jaqen H'ghar|G·推动剧情的配角|无面者|布拉佛斯|无面者导师|Tom Wlaschiha|引导艾莉亚前往布拉佛斯学习变脸与刺杀。`,
+`beric|贝里·唐德利恩|Beric Dondarrion|G·推动剧情的配角|唐德利恩|河间地/风暴地|无旗兄弟会领袖|Richard Dormer|屡次复活，率无旗兄弟会保护平民。`,
+`gendry|詹德利|Gendry Baratheon|G·推动剧情的配角|拜拉席恩|君临→风暴地|劳勃私生子·铁匠|Joe Dempsie|因王室血脉被追捕，后来受封为风息堡领主。`,
+`shireen|希琳·拜拉席恩|Shireen Baratheon|G·推动剧情的配角|拜拉席恩|龙石岛|史坦尼斯之女|Kerry Ingram|与戴佛斯关系亲近，其命运影响史坦尼斯阵营。`,
+`mance|曼斯·雷德|Mance Rayder|G·推动剧情的配角|自由民|塞外|塞外之王|Ciarán Hinds|集结自由民越过长城以躲避异鬼。`,
+`ygritte|耶哥蕊特|Ygritte|G·推动剧情的配角|自由民|塞外|琼恩的恋人|Rose Leslie|让琼恩理解长城以北的自由民生活。`,
+`pycelle|派席尔大学士|Grand Maester Pycelle|G·推动剧情的配角|学城/御前会议|君临|大学士|Julian Glover|多年参与君临御前会议，暗中偏向兰尼斯特。`,
+`myrcella|弥赛菈|Myrcella Baratheon|G·推动剧情的配角|兰尼斯特（对外称拜拉席恩）|君临→多恩|王室公主|Nell Tiger Free|瑟曦与詹姆的女儿，其多恩联姻牵动两地关系。`,
+`olivar|奥利瓦|Olyvar|G·推动剧情的配角|小指头情报网|君临|洛拉斯旧识|Will Tudor|向信仰武装指证洛拉斯，使提利尔与教会冲突加剧。`,
+`syrax|叙拉克斯|Syrax|H·巨龙与骑手|坦格利安巨龙|龙石岛|🐉 巨龙||雷妮拉的坐骑，黑党重要巨龙。`,
+`caraxes|科拉克休|Caraxes|H·巨龙与骑手|坦格利安巨龙|龙石岛/赫伦堡|🐉 巨龙||又称血虫，戴蒙的坐骑。`,
+`vhagar|瓦格哈尔|Vhagar|H·巨龙与骑手|坦格利安巨龙|潮头岛→风息堡|🐉 巨龙||原由兰娜骑乘，后与伊蒙德结缘，是绿党最强大的巨龙之一。`,
+`meleys|梅丽亚斯|Meleys|H·巨龙与骑手|坦格利安巨龙|潮头岛|🐉 巨龙||雷妮丝的坐骑，在鸦栖堡参战。`,
+`sunfyre|阳炎|Sunfyre|H·巨龙与骑手|坦格利安巨龙|君临|🐉 巨龙||伊耿二世的坐骑。`,
+`dreamfyre|梦火|Dreamfyre|H·巨龙与骑手|坦格利安巨龙|君临|🐉 巨龙||海伦娜的坐骑。`,
+`arrax|阿拉克斯|Arrax|H·巨龙与骑手|坦格利安巨龙|龙石岛→风息堡|🐉 巨龙||路斯里斯的坐骑，在风息堡离开后遭瓦格哈尔追击。`,
+`vermax|沃马克斯|Vermax|H·巨龙与骑手|坦格利安巨龙|龙石岛|🐉 巨龙||杰卡里斯的坐骑。`,
+`moondancer|月舞|Moondancer|H·巨龙与骑手|坦格利安巨龙|潮头岛|🐉 巨龙||贝拉的坐骑。`,
+`seasmoke|海烟|Seasmoke|H·巨龙与骑手|瓦列利安巨龙|潮头岛/龙石岛|🐉 巨龙||原由兰诺骑乘，后来选择亚当。`,
+`vermithor|沃米索尔|Vermithor|H·巨龙与骑手|坦格利安巨龙|龙石岛|🐉 巨龙||曾属于杰赫里斯一世，后来由休·铁锤骑乘。`,
+`silverwing|银翼|Silverwing|H·巨龙与骑手|坦格利安巨龙|龙石岛|🐉 巨龙||曾属于亚莉珊王后，后来由乌尔夫骑乘。`,
+`drogon|卓耿|Drogon|G·巨龙与骑手|丹妮莉丝的龙|厄斯索斯→龙石岛|🐉 巨龙||丹妮莉丝骑乘的黑色巨龙。`,
+`rhaegal|雷戈|Rhaegal|G·巨龙与骑手|丹妮莉丝的龙|厄斯索斯→北境|🐉 巨龙||琼恩曾骑乘的绿色巨龙，名字纪念雷加。`,
+`viseriondragon|韦赛利昂|Viserion|G·巨龙与骑手|丹妮莉丝的龙|厄斯索斯→塞外|🐉 巨龙||被夜王杀死后成为亡者之龙，名字纪念韦赛里斯。`
+);
+const P=raw.map(t=>{const [id,n,en,g,h,place,role,actor,bio]=t.split('|');return {id,n,en,g,h,place,role,actor,bio,kind:role.includes('巨龙')?'dragon':'person',era:g[0]==='H'?'hotd':g[0]==='K'?'knight':'got'}});
+const aliases={
+viserys1:'和平之王',rhaenyra:'黑党女王',daemon:'浪荡王子',jace:'杰斯',luke:'路克',
+rhaenys:'无冕女王',corlys:'海蛇',alicent:'绿党王后',otto:'绿党之手',
+aegon2:'绿党伊耿',aemond:'独眼伊蒙德',criston:'拥王者',mysaria:'白蛆',
+harwin:'碎骨者',hugh:'铁锤',ulf:'白发乌尔夫',crabfeeder:'蟹饵王',
+dunk:'邓克',egg:'伊戈',baelor:'破矛者',aerion:'明焰',daeron:'醉鬼',lyonel:'欢笑风暴',
+ned:'奈德',catelyn:'凯特',robb:'少狼主',sansa:'小小鸟',arya:'小狼女',
+bran:'三眼乌鸦',jon:'雪诺 / 白狼',theon:'臭佬',cersei:'太后',
+jaime:'弑君者',tyrion:'小恶魔',tywin:'西境雄狮',robert:'篡夺者',
+stannis:'龙石岛公爵',melisandre:'红袍女',aerys:'疯王',rhaegar:'龙石岛王储',
+daenerys:'风暴降生 / 龙之母',viserys3:'乞丐王',jorah:'大熊',drogo:'卓戈卡奥',
+littlefinger:'小指头',varys:'八爪蜘蛛',balon:'海怪之王',euron:'鸦眼',nightking:'夜王',
+sam:'山姆',ramsay:'小剥皮',roose:'剥皮人',oberyn:'红毒蛇',olenna:'荆棘女王',
+loras:'百花骑士',highsparrow:'大麻雀',bronn:'黑水河爵士',hound:'猎狗',
+mountain:'魔山',beric:'闪电大王',mance:'塞外之王',ygritte:'耶哥蕊特',
+caraxes:'血虫',meleys:'红女王',vermithor:'铜之怒',drogon:'黑龙'
+};
+for(const p of P)p.alias=aliases[p.id]||(p.kind==='dragon'?p.en:'无公认别号');
+const by=Object.fromEntries(P.map(p=>[p.id,p])),R=[];
+function edges(type,txt){for(const pair of txt.split(' ')){const [a,b]=pair.split(':');if(!by[a]||!by[b])throw Error('Invalid edge: '+pair);R.push({a,b,type})}}
+edges('parent','viserys1:rhaenyra viserys1:aegon2 viserys1:aemond viserys1:helaena otto:alicent alicent:aegon2 alicent:aemond alicent:helaena rhaenyra:jace rhaenyra:luke rhaenyra:aegon3 daemon:baela daemon:rhaena daemon:aegon3 laena:baela laena:rhaena rhaenys:laenor rhaenys:laena corlys:laenor corlys:laena corlys:addam corlys:alyn maekar:egg maekar:aerion maekar:daeron ned:robb ned:sansa ned:arya ned:bran ned:rickon catelyn:robb catelyn:sansa catelyn:arya catelyn:bran catelyn:rickon tywin:cersei tywin:jaime tywin:tyrion cersei:joffrey cersei:tommen jaime:joffrey jaime:tommen aerys:rhaegar aerys:daenerys aerys:viserys3 rhaegar:jon lyanna:jon balon:theon balon:yara');
+edges('sibling','viserys1:daemon aegon2:aemond aegon2:helaena jace:luke baela:rhaena addam:alyn alicent:gwayne baelor:maekar egg:aerion egg:daeron ned:lyanna robb:sansa sansa:arya arya:bran bran:rickon cersei:jaime jaime:tyrion robert:stannis stannis:renly catelyn:edmure rhaegar:daenerys daenerys:viserys3 theon:yara');
+edges('spouse','viserys1:alicent rhaenyra:daemon rhaenyra:laenor daemon:laena rhaenys:corlys aegon2:helaena ned:catelyn robert:cersei cersei:jaime rhaegar:lyanna jon:daenerys daenerys:drogo greyworm:missandei');
+edges('ally','rhaenyra:rhaenys rhaenyra:corlys rhaenyra:jace rhaenyra:cregan rhaenyra:mysaria rhaenyra:addam alicent:otto alicent:criston aegon2:criston aegon2:jason aegon2:borros aemond:criston dunk:lyonel dunk:baelor dunk:raymun jon:sam jon:tormund jon:davos jon:daenerys sansa:brienne daenerys:tyrion daenerys:jorah daenerys:missandei daenerys:greyworm daenerys:yara daenerys:varys stannis:davos stannis:melisandre cersei:euron robb:edmure');
+edges('enemy','rhaenyra:aegon2 daemon:aemond jace:aemond luke:aemond rhaenys:aegon2 criston:rhaenyra dunk:aerion aerion:tanselle robb:tywin robb:walder robert:rhaegar stannis:renly stannis:joffrey cersei:sansa cersei:margaery cersei:daenerys cersei:tyrion jaime:aerys theon:robb yara:euron jon:nightking arya:nightking bran:nightking balon:robb');
+edges('mentor','arlan:dunk dunk:egg ned:jon brienne:sansa');edges('lineage','rhaenyra:egg daemon:egg egg:daenerys egg:jon cregan:ned lyonel:robert');
+edges('parent','baelor:valarr robert:gendry stannis:shireen lysa:robin');
+edges('sibling','margaery:loras hound:mountain catelyn:lysa');
+edges('spouse','robb:talisa oberyn:ellaria littlefinger:lysa');
+edges('ally','otto:tyland otto:orwyle aegon2:jasper daemon:simon jace:jeyne rhaenyra:jeyne dunk:humfrey olenna:margaery olenna:loras cersei:qyburn tyrion:bronn tyrion:podrick brienne:podrick arya:hound arya:jaqen bran:hodor bran:osha osha:rickon roose:ramsay walder:roose roose:tywin highsparrow:olivar sam:gilly jon:gendry');
+edges('enemy','daemon:crabfeeder daemon:vaemond rhaenyra:vaemond olenna:joffrey oberyn:mountain hound:mountain jon:ramsay roose:robb ramsay:theon ramsay:sansa highsparrow:cersei highsparrow:loras ellaria:myrcella');
+edges('mentor','jaqen:arya brienne:podrick');
+edges('lineage','olenna:margaery olenna:loras');edges('enemy','aeronbracken:davosblackwood');
+edges('rider','rhaenyra:syrax daemon:caraxes laena:vhagar aemond:vhagar rhaenys:meleys aegon2:sunfyre helaena:dreamfyre luke:arrax jace:vermax baela:moondancer laenor:seasmoke addam:seasmoke hugh:vermithor ulf:silverwing daenerys:drogon jon:rhaegal nightking:viseriondragon');
+const types={parent:'亲子',sibling:'兄妹/姐弟',spouse:'婚姻/情感',ally:'同盟/效忠',enemy:'敌对/冲突',mentor:'抚养/师徒',lineage:'隔代祖先/后裔',rider:'骑手/巨龙'};
+const eras={hotd:['龙之家族','约 112–132 AC · 王朝内战'],knight:['七王国的骑士','约 209 AC · 无龙时代'],got:['权力的游戏','约 298–305 AC · 王位战争与长夜']};
+const stories=[
+['王朝血脉','三部剧怎样相连','rhaenyra daemon aegon3 egg maekar aerys rhaegar daenerys jon','紫色线只表示隔代后裔；雷妮拉与伊戈之间相隔多代，绝非母子。'],
+['血龙狂舞','黑党与绿党','viserys1 rhaenyra daemon jace rhaenys corlys alicent otto aegon2 aemond criston syrax caraxes vhagar meleys sunfyre','先看韦赛里斯的继承安排，再比较雷妮拉黑党与伊耿二世绿党及各自的巨龙。'],
+['邓克与伊戈','阿什福德的七子审判','dunk egg arlan maekar baelor aerion tanselle lyonel valarr humfrey','伊戈是梅卡之子，贝勒是他的伯父，并不是他的父亲。'],
+['劳勃起义','坦格利安王朝覆灭','aerys rhaegar lyanna robert ned jaime jon daenerys gendry','雷加与莱安娜是琼恩生父母，艾德是其舅父与养父。'],
+['五王之战','五位王位宣称者','joffrey robb stannis renly balon tywin tyrion catelyn walder roose talisa theon','五位王是乔佛里、罗柏、史坦尼斯、蓝礼、巴隆；攸伦并不在这五人之中。'],
+['长夜','临冬城决战','nightking jon daenerys arya bran sansa theon sam tormund greyworm drogon rhaegal viseriondragon','原本敌对的各方在临冬城共同对抗亡者军团。']];
+const wars=[
+['stepwar','石阶列岛战争','hotd','steps','石阶列岛','daemon corlys laenor crabfeeder caraxes seasmoke','戴蒙与科利斯围绕狭海航道与蟹饵王的势力作战。'],
+['rooks','鸦栖堡之战','hotd','crown','王领','rhaenys aegon2 aemond criston meleys sunfyre vhagar','黑绿双方龙骑士正面交锋。'],
+['burning','焚烧磨坊之战','hotd','river','河间地','aeronbracken davosblackwood daemon aegon2','布雷肯与布莱伍德的冲突，体现大战向河间地扩散；列出阵营人物不表示其亲临战场。'],
+['ashfordtrial','阿什福德七子审判','knight','reach','河湾地','dunk egg baelor maekar aerion lyonel raymun steffon tanselle humfrey','七对七比武式神判，不是国家之间的战争。'],
+['trident','三叉戟河之战','got','river','河间地','robert rhaegar ned','劳勃起义中的决定性战役，劳勃杀死雷加；艾德参与起义，不表示他与雷加直接交手。'],
+['blackwater','黑水河之战','got','crown','君临附近','stannis tyrion cersei joffrey tywin davos','史坦尼斯进攻君临，提利昂组织防卫，泰温援军赶到。'],
+['redwedding','红色婚礼','got','river','孪河城','robb catelyn walder tywin edmure roose talisa','政治屠杀和战争转折点，不是传统会战；泰温属于幕后策划相关人物。'],
+['bastards','私生子之战','got','north','临冬城外','jon sansa rickon davos tormund ramsay','琼恩一方争夺临冬城，谷地援军改变战局。'],
+['winterfellwar','临冬城之战','got','north','临冬城','jon daenerys arya bran sansa theon brienne sam greyworm nightking drogon rhaegal viseriondragon','生者联军迎战夜王与亡者大军。'],
+['fall','君临陷落','got','crown','君临','daenerys cersei jaime tyrion jon greyworm drogon hound mountain qyburn','丹妮莉丝攻入君临，城中平民遭到惨重伤亡。']];
+const plotStories={
+'王朝血脉':[
+['王朝内战','韦赛里斯指定雷妮拉继位；她与戴蒙的后代继续坦格利安王系。','viserys1 rhaenyra daemon aegon3'],
+['跨代继承','从雷妮拉与戴蒙一系，经韦赛里斯二世、伊耿四世、戴伦二世、梅卡一世，才到伊耿五世；中间人物并未逐个作为影视人物节点。','rhaenyra daemon maekar egg'],
+['疯王与后人','伊耿五世的后裔包括疯王伊里斯二世，再向下是雷加、丹妮莉丝与琼恩。','egg aerys rhaegar daenerys jon']],
+'血龙狂舞':[
+['继承裂缝','韦赛里斯指定长女雷妮拉为继承人；艾莉森与奥托则支持伊耿二世。','viserys1 rhaenyra alicent otto aegon2'],
+['家族分裂','戴蒙、雷妮丝与科利斯支持黑党；伊蒙德、克里斯顿支持绿党。','rhaenyra daemon rhaenys corlys aegon2 aemond criston'],
+['巨龙参战','叙拉克斯、科拉克休、梅丽亚斯与瓦格哈尔、阳炎分别连接双方龙骑士，战争损耗龙族。','syrax caraxes meleys vhagar sunfyre rhaenyra daemon rhaenys aemond aegon2']],
+'邓克与伊戈':[
+['相遇','阿兰死后，邓肯独自前往阿什福德；伊戈主动要求成为他的侍从。','arlan dunk egg'],
+['救人','亚历昂袭击坦塞尔，邓肯出手保护她，因殴打王子遭到审判。','aerion tanselle dunk egg'],
+['七子审判','贝勒、莱昂内尔、雷蒙等为邓肯出战；梅卡是伊戈的父亲，贝勒则是伯父。','dunk baelor maekar egg lyonel raymun aerion']],
+'劳勃起义':[
+['旧王朝危机','疯王的统治及雷加与莱安娜的失踪，引燃贵族反叛。','aerys rhaegar lyanna robert ned'],
+['战场转折','劳勃在三叉戟河击败雷加，詹姆后来在君临杀死伊里斯二世。','robert rhaegar jaime aerys'],
+['遗留的血脉','艾德抚养莱安娜与雷加之子琼恩；丹妮莉丝流亡厄斯索斯。','ned lyanna rhaegar jon daenerys']],
+'五王之战':[
+['合法性争议','乔佛里的身世动摇继承权，劳勃两位兄弟史坦尼斯与蓝礼各自称王。','joffrey cersei jaime robert stannis renly'],
+['诸王起兵','罗柏在北境称王，巴隆以铁群岛独立为目标称王；战争蔓延各地。','robb catelyn theon balon stannis renly joffrey'],
+['孪河城背叛','罗柏与佛雷家失和；瓦德、卢斯和泰温的安排导致红色婚礼。','robb talisa catelyn walder roose tywin']],
+'长夜':[
+['北境备战','琼恩联合自由民与丹妮莉丝的军队，史塔克家族在临冬城部署防线。','jon daenerys tormund greyworm sansa bran'],
+['亡者突破','夜王骑乘复活的韦赛利昂进攻，卓耿与雷戈参战。','nightking viseriondragon daenerys drogon jon rhaegal'],
+['决战','席恩守护布兰，艾莉亚刺杀夜王，亡者大军随之瓦解。','theon bran arya nightking jon daenerys']]};
+const plotWars={
+stepwar:[['航线受阻','蟹饵王控制石阶列岛航道，威胁海蛇的船队。','crabfeeder corlys'],['结盟远征','戴蒙与科利斯联合出兵，科拉克休与海烟参与。','daemon corlys laenor caraxes seasmoke'],['扭转局势','戴蒙以诱敌方式接近蟹饵王，海陆力量合击。','daemon crabfeeder corlys']],
+rooks:[['诱出巨龙','克里斯顿推进王领作战，迫使黑党派雷妮丝与梅丽亚斯增援。','criston rhaenys meleys'],['三龙交锋','伊耿二世骑阳炎、伊蒙德骑瓦格哈尔投入战斗。','aegon2 sunfyre aemond vhagar rhaenys meleys'],['惨重代价','梅丽亚斯与雷妮丝战死，伊耿二世重伤；伊蒙德接掌更大权力。','rhaenys meleys aegon2 aemond']],
+burning:[['家族旧怨','布莱伍德与布雷肯两家长期敌对，分别倒向黑绿阵营。','aeronbracken davosblackwood daemon aegon2'],['局部交战','埃隆与戴佛斯争执边界石，冲突升级为两家战斗。','aeronbracken davosblackwood'],['战火扩大','戴蒙进驻赫伦堡，河间地诸侯必须重新表态。','daemon simon alys']],
+ashfordtrial:[['冲突起因','亚历昂伤害坦塞尔，邓肯挺身而出。','aerion tanselle dunk'],['寻找骑士','伊戈身份暴露；邓肯获得贝勒、莱昂内尔与雷蒙等人的支持。','egg dunk baelor lyonel raymun'],['审判与后果','七子审判举行，王室与雇佣骑士的命运从此交织。','dunk baelor maekar aerion egg']],
+trident:[['劳勃起兵','疯王与雷加引起各家反抗，劳勃与艾德加入叛军。','robert ned aerys rhaegar'],['河上决斗','劳勃在三叉戟河战场杀死雷加。','robert rhaegar'],['后续命运','叛军胜利；艾德后来隐藏了莱安娜之子的真实身世。','ned lyanna jon robert']],
+blackwater:[['进攻君临','史坦尼斯率舰队与军队攻向王都，戴佛斯在舰队中。','stannis davos joffrey'],['野火防线','提利昂策划以野火破坏舰队，城内瑟曦应对危机。','tyrion cersei stannis'],['援军抵达','泰温的援军使围城局势逆转。','tywin tyrion stannis']],
+redwedding:[['婚约破裂','罗柏与塔丽莎成婚，原先与佛雷家族的婚约作废。','robb talisa walder'],['婚宴陷阱','艾德慕的婚宴成为陷阱；瓦德与卢斯参与背叛。','edmure walder roose robb catelyn talisa'],['战局逆转','罗柏与凯特琳遇害；泰温是幕后的政治安排者。','robb catelyn walder roose tywin']],
+bastards:[['控制北境','拉姆斯控制临冬城，并以瑞肯威胁琼恩与珊莎。','ramsay rickon jon sansa'],['野战受困','琼恩、托蒙德和戴佛斯一方陷入包围。','jon tormund davos ramsay'],['夺回城堡','谷地骑兵到来后局势逆转，珊莎重返临冬城。','sansa jon ramsay']],
+winterfellwar:[['守城','琼恩、丹妮莉丝与史塔克家族组织防线，两条活龙迎战。','jon daenerys sansa greyworm drogon rhaegal'],['夜王逼近','夜王与亡者之龙突破防线，席恩守护布兰。','nightking viseriondragon theon bran'],['终结长夜','艾莉亚刺杀夜王，亡者军团崩溃。','arya nightking bran']],
+fall:[['围城','丹妮莉丝率龙与军队抵达君临，瑟曦依靠王都防御。','daenerys drogon cersei greyworm'],['城池陷落','城市投降后仍遭烈火摧毁；琼恩与提利昂目睹灾难。','daenerys drogon jon tyrion'],['王朝终局','詹姆与瑟曦身亡，猎狗与魔山决斗。','jaime cersei hound mountain qyburn']]};
+const regions={
+beyond:['塞外','长城以北，异鬼与自由民活动的寒冷地带。','自由民、异鬼','长城、艰难屯'],north:['北境','维斯特洛北部，疆域广阔；临冬城是政治中心。','史塔克','临冬城、长城'],iron:['铁群岛','西海离岸群岛，以舰队与海上文化著称。','葛雷乔伊','派克岛'],river:['河间地','三叉戟河流域，多次王朝战争途经。','徒利及各诸侯','奔流城、孪河城、赫伦堡'],vale:['谷地','东部山地，关口与山脉形成防御屏障。','艾林','鹰巢城'],west:['西境','维斯特洛西部，兰尼斯特家族的大本营。','兰尼斯特','凯岩城、兰尼斯港'],crown:['王领','王都君临与龙石岛附近，王室直接统辖地区。','王室','君临、龙石岛、鸦栖堡'],reach:['河湾地','西南农业富庶地区，旧镇也是学术与贸易重镇。','提利尔、海塔尔','高庭、旧镇、阿什福德'],storm:['风暴地','东南部，拜拉席恩家族据守风息堡。','拜拉席恩','风息堡、盛夏厅'],dorne:['多恩','最南部，气候干热且历史文化有别于北方。','马泰尔','阳戟城'],essos:['厄斯索斯西部','狭海以东，包括布拉佛斯等自由贸易城邦。','城邦及不同势力','布拉佛斯、潘托斯'],steps:['石阶列岛','狭海南部航路咽喉，连接多恩与厄斯索斯。','海上争夺势力','岛屿航道']};
+const sites={wall:['长城','守夜人的防线。','north'],winterfell:['临冬城','史塔克家族城堡，两场重要决战的地点。','north'],twins:['孪河城','佛雷家族据点，红色婚礼发生处。','river'],harrenhal:['赫伦堡','河间地巨型城堡，多个时期的权力角逐地点。','river'],kings:['君临','铁王座与王国权力中心。','crown'],dragonstone:['龙石岛','坦格利安祖地，狭海西侧火山岛。','crown'],oldtown:['旧镇','海塔尔家族与学城所在地。','reach'],ashford:['阿什福德','比武大会与七子审判举办地。','reach'],storms:['风息堡','拜拉席恩据点，路斯里斯出使后的冲突在此发端。','storm'],braavos:['布拉佛斯','厄斯索斯城邦，艾莉亚曾在此受训。','essos']};
+const content=document.getElementById('content'),main=document.getElementById('main'),detail=document.getElementById('detail');
+let era='all',mode='focus',focus=null,story=null,depth=1,query='',picked=null,roster=null,regionView=false,isolated=false,pathMode=false,pathStart=null,pathResult=null,activePlot=null,activeBeat=-1;
+const allowedTypes=new Set(['parent','sibling','spouse','ally','enemy','mentor','lineage','rider']);
+function dragonPortrait(p){let h=0;for(const c of p.id)h=(h*37+c.charCodeAt(0))>>>0;const colors=['#bd7048','#a38b63','#667d8a','#9c5b51','#c6a25d','#758776'],c=colors[h%colors.length],back=colors[(h>>4)%colors.length];const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 94"><defs><linearGradient id="d"><stop stop-color="'+back+'"/><stop offset="1" stop-color="#191a22"/></linearGradient></defs><rect width="70" height="94" fill="url(#d)"/><path d="M31 61Q2 20 4 42L0 17l24 17 11 15L56 25l14-8-8 26Q49 45 42 64z" fill="'+c+'" stroke="#e3b27c" stroke-width="1.1"/><path d="M17 83Q11 63 32 40l2-25 6 17 5 4 10-12-4 23 11 8-14 4-7 20Z" fill="'+c+'" stroke="#f0bb7f"/><path d="M21 92Q50 89 48 68" fill="none" stroke="'+c+'" stroke-width="8"/><circle cx="44" cy="48" r="2" fill="#ffd983"/><path d="M47 57l13 6-12 2" fill="#dfbd8b"/><path d="M25 69l-9 12 16-7m12-5 11 12-16-5" stroke="#d9ae73" stroke-width="2" fill="none"/></svg>';return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)}
+function portrait(p){let x=0;for(const ch of p.id)x=(x*31+ch.charCodeAt(0))>>>0;const skins=['#bd8c6a','#e8c3a0','#906b54','#d4a47d'],hair=['#28272b','#5c4037','#c9b085','#484f51','#a87c60'],cloth=['#3a4f56','#51423e','#5d5540','#394d42'];const s=skins[x%4],h=hair[(x>>3)%5],c=cloth[(x>>6)%4];const crown=p.role.includes('♛')?'<path d="M19 22 17 11l11 7 7-11 7 11 11-7-2 11z" fill="#c7a461" stroke="#efd899"/>':'';const beard=x%5===1?'<path d="M20 45Q35 64 50 45Q43 59 35 59Q27 57 20 45" fill="'+h+'"/>':'';const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 94"><defs><linearGradient id="bg"><stop stop-color="#3a4f52"/><stop offset="1" stop-color="#121e23"/></linearGradient></defs><rect width="70" height="94" fill="url(#bg)"/><circle cx="35" cy="31" r="23" fill="'+h+'"/><path d="M2 94Q6 60 25 60L35 69l12-9q19 2 21 34" fill="'+c+'"/><ellipse cx="35" cy="38" rx="16" ry="21" fill="'+s+'"/><path d="M19 35q-3-25 17-25 16 0 16 24-5-14-12-12-10 6-21 6z" fill="'+h+'"/><circle cx="29" cy="40" r="1.3" fill="#252425"/><circle cx="41" cy="40" r="1.3" fill="#252425"/><path d="M30 51q5 2 10 0" stroke="#694a42" fill="none" stroke-width="1.2"/>'+beard+crown+'</svg>';return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)}
+function render(){content.innerHTML='';for(const e of ['hotd','knight','got']){const section=document.createElement('section');section.className='era '+e+(era!=='all'&&era!==e?' hidden':'');section.id='era-'+e;const head=document.createElement('h2');head.innerHTML='《'+eras[e][0]+'》<small>'+eras[e][1]+'</small>';section.append(head);
+  const groups=[...new Set(P.filter(p=>p.era===e).map(p=>p.g))];for(const g of groups){const members=P.filter(p=>p.g===g),box=document.createElement('div');box.className='group';box.innerHTML='<h3>'+g.substring(2)+'<small>'+members.length+' 个节点</small></h3><div class="cards"></div>';for(const p of members){const card=document.createElement('article');card.id='person-'+p.id;card.className='card'+(p.kind==='dragon'?' dragon':'');card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label',p.n+'，别称'+p.alias+'，'+p.role+'，'+p.place);card.innerHTML='<div class="portrait"><img class="'+(p.kind==='dragon'?'dragon-portrait':'')+'" src="'+(p.kind==='dragon'?dragonPortrait(p):portrait(p))+'" alt="'+p.n+'的原创'+(p.kind==='dragon'?'巨龙':'人物')+'插画"><small>插画</small></div><div class="ct"><b>'+p.n+'</b><span class="alias">'+(p.kind==='dragon'?'英文/别称':'别称')+'：'+p.alias+'</span><small>'+p.role+'</small><span>'+p.h+'<br>'+p.place+'</span></div>'+(p.role.includes('♛')||p.role.includes('🐉')?'<span class="badge">'+(p.role.includes('♛')?'♛':'🐉')+'</span>':'');card.onclick=()=>select(p.id,true);card.onkeydown=ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();select(p.id,true)}};box.querySelector('.cards').append(card)}section.append(box)}content.append(section)}
+document.getElementById('total').textContent=P.filter(p=>p.kind==='person').length+' 人 · '+P.filter(p=>p.kind==='dragon').length+' 龙';document.getElementById('linkTotal').textContent=R.length;update()}
+function matches(p){return (era==='all'||p.era===era)&&(!query||(p.n+p.en+p.alias+p.g+p.h+p.place+p.role+p.actor).toLowerCase().includes(query))}
+function activeEdges(){const links=R.filter(r=>allowedTypes.has(r.type));if(pathResult)return pathResult.edges.filter(r=>allowedTypes.has(r.type));if(mode==='all')return links;if(mode==='story'&&roster)return links.filter(r=>roster.has(r.a)&&roster.has(r.b));if(!focus)return[];if(depth===1)return links.filter(r=>r.a===focus||r.b===focus);const one=new Set([focus]);for(const r of links){if(r.a===focus)one.add(r.b);if(r.b===focus)one.add(r.a)}return links.filter(r=>one.has(r.a)&&one.has(r.b))}
+function update(){for(const section of document.querySelectorAll('.era'))section.classList.toggle('hidden',era!=='all'&&!section.classList.contains(era));let shown=new Set(P.filter(matches).map(p=>p.id));const allowed=activeEdges(),near=new Set(focus?[focus]:[]);for(const r of allowed){near.add(r.a);near.add(r.b)}if(isolated&&(roster||focus)){const keep=roster||near;shown=new Set([...shown].filter(id=>keep.has(id)))}const edgesShown=allowed.filter(r=>shown.has(r.a)&&shown.has(r.b));for(const p of P){const card=document.getElementById('person-'+p.id);if(!card)continue;card.style.display=shown.has(p.id)?'flex':'none';card.classList.toggle('selected',p.id===focus);card.classList.toggle('near',p.id!==focus&&near.has(p.id));card.classList.toggle('region-hit',!!regionView&&!!roster?.has(p.id));card.classList.toggle('path-hit',!!pathResult?.ids.includes(p.id));card.classList.toggle('dim',(!!focus&&!near.has(p.id))||(!focus&&!!roster&&!roster.has(p.id)))}
+for(const btn of document.querySelectorAll('[data-era]'))btn.classList.toggle('on',btn.dataset.era===era);for(const btn of document.querySelectorAll('[data-mode]'))btn.classList.toggle('on',btn.dataset.mode===mode);for(const btn of document.querySelectorAll('.story'))btn.classList.toggle('on',btn.dataset.story===story?.[0]);for(const btn of document.querySelectorAll('.waritem'))btn.classList.toggle('on',btn.dataset.war===activePlot?.id);document.getElementById('isolate').classList.toggle('isolate',isolated);document.getElementById('path').classList.toggle('pathmode',pathMode||!!pathResult);document.getElementById('counter').textContent=P.filter(p=>p.kind==='person').length+' 人 · '+P.filter(p=>p.kind==='dragon').length+' 龙 · 当前'+shown.size+'节点 / '+edgesShown.length+'线 · 照片 '+photoDone.size+'/'+P.filter(x=>x.actor).length;draw(edgesShown)}
+function draw(list){document.querySelector('.overlay')?.remove();if(!list.length)return;const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.classList.add('overlay');let w=main.scrollWidth,h=main.scrollHeight;svg.setAttribute('width',w);svg.setAttribute('height',h);svg.setAttribute('viewBox','0 0 '+w+' '+h);const mr=main.getBoundingClientRect();
+for(const r of list){const a=document.getElementById('person-'+r.a),b=document.getElementById('person-'+r.b);if(!a||!b||a.style.display==='none'||b.style.display==='none')continue;const ar=a.getBoundingClientRect(),br=b.getBoundingClientRect();const x1=ar.left-mr.left+main.scrollLeft+ar.width/2,y1=ar.top-mr.top+main.scrollTop+ar.height/2,x2=br.left-mr.left+main.scrollLeft+br.width/2,y2=br.top-mr.top+main.scrollTop+br.height/2;const bend=Math.min(85,Math.max(22,Math.abs(y2-y1)*.16));const path=document.createElementNS('http://www.w3.org/2000/svg','path');path.setAttribute('d','M'+x1+' '+y1+' C'+(x1+bend)+' '+y1+' '+(x2-bend)+' '+y2+' '+x2+' '+y2);path.setAttribute('class','edge '+r.type+(pathResult?.edges.includes(r)?' path':''));const title=document.createElementNS('http://www.w3.org/2000/svg','title');title.textContent=by[r.a].n+' — '+types[r.type]+' — '+by[r.b].n;path.append(title);svg.append(path)}main.append(svg)}
+function detailBox(title,sub,description,ids,img,plot){let stages='';if(plot){stages='<div class="plot"><div class="plot-title">剧情与转折 · 点击阶段聚焦</div><p class="plot-summary">'+plot.overview+'</p><div class="beats"><button class="on" data-beat="-1"><b>全程</b>显示全部相关人物与巨龙</button>'+plot.beats.map((b,i)=>'<button data-beat="'+i+'"><b>'+(i+1)+' · '+b[0]+'</b>'+b[1]+'</button>').join('')+'</div></div>'}detail.innerHTML='<div class="dhead">'+(img?'<img src="'+img+'" alt="">':'')+'<div><b>'+title+'</b><small>'+sub+'</small></div><button aria-label="关闭">×</button></div><p>'+description+'</p>'+stages+'<div class="relchips">'+ids.map(({id,label})=>'<button data-id="'+id+'">'+label+'</button>').join('')+'</div>';detail.classList.add('show');detail.querySelector('.dhead button').onclick=clear;detail.querySelectorAll('.relchips button').forEach(btn=>btn.onclick=()=>select(btn.dataset.id,true));detail.querySelectorAll('[data-beat]').forEach(btn=>btn.onclick=()=>{activeBeat=Number(btn.dataset.beat);roster=new Set(activeBeat<0?plot.all:plot.beats[activeBeat][2].split(' '));mode='story';detail.querySelectorAll('[data-beat]').forEach(x=>x.classList.toggle('on',x===btn));update()})}
+function findPath(from,to){const prev=new Map([[from,null]]),queue=[from];for(let n=0;n<queue.length;n++){const cur=queue[n];if(cur===to)break;for(const r of R){if(!allowedTypes.has(r.type))continue;const next=r.a===cur?r.b:r.b===cur?r.a:null;if(next&&!prev.has(next)){prev.set(next,{via:cur,edge:r});queue.push(next)}}}if(!prev.has(to))return null;const ids=[to],links=[];for(let cur=to;cur!==from;){const step=prev.get(cur);links.unshift(step.edge);cur=step.via;ids.unshift(cur)}return {ids,edges:links,from,to}}
+function showPath(from,to){const result=findPath(from,to);pathMode=false;pathStart=null;focus=null;story=null;activePlot=null;regionView=false;era='all';query='';document.getElementById('search').value='';pathResult=result;roster=result?new Set(result.ids):new Set([from,to]);mode='story';if(result){const chain=result.ids.map((id,i)=>by[id].n+(i<result.edges.length?'  —'+types[result.edges[i].type]+'→  ':'')).join('');detailBox('两人关系路径',by[from].n+' → '+by[to].n,'<span class="path-note">按当前勾选的线型寻找图中最少关系边的路径；“隔代血脉”是一条概括线，不代表一代。</span><br>'+chain,result.ids.map(id=>({id,label:by[id].n})))}else detailBox('未找到已记录路径',by[from].n+' → '+by[to].n,'在当前线型筛选及已收录人物关系中找不到路径。可以重新勾选线型，或选择其他人物。',[{id:from,label:by[from].n},{id:to,label:by[to].n}]);update()}
+function select(id,scroll){if(pathMode){if(!pathStart){pathStart=id;detailBox('关系路径：已选起点',by[id].n,'现在点击另一位人物或巨龙作为终点。路径会按已勾选的关系线型寻找。',[{id,label:by[id].n}]);update();return}showPath(pathStart,id);return}focus=id;story=null;activePlot=null;activeBeat=-1;roster=null;regionView=false;pathResult=null;mode='focus';era='all';query='';document.getElementById('search').value='';picked=null;paint();const p=by[id],rs=R.filter(r=>r.a===id||r.b===id);detailBox(p.n,'《'+eras[p.era][0]+'》 · '+p.h+' · '+p.place+' · '+p.role+' · '+(p.kind==='dragon'?'英文名':'别称')+'：'+p.alias,p.bio,rs.map(r=>({id:r.a===id?r.b:r.a,label:types[r.type]+' · '+by[r.a===id?r.b:r.a].n})),document.querySelector('#person-'+id+' img')?.src);update();if(scroll)document.getElementById('person-'+id).scrollIntoView({behavior:'smooth',block:'center'})}
+function clear(){focus=null;story=null;activePlot=null;activeBeat=-1;roster=null;regionView=false;pathResult=null;pathStart=null;pathMode=false;picked=null;paint();mode='focus';detail.classList.remove('show');update()}
+function trace(s){story=s;activePlot={id:s[0],kind:'story'};activeBeat=-1;focus=null;pathResult=null;pathMode=false;regionView=false;mode='story';era='all';query='';picked=null;paint();document.getElementById('search').value='';const beats=plotStories[s[0]],ids=[...new Set([...s[2].split(' '),...beats.flatMap(b=>b[2].split(' '))])];roster=new Set(ids);detailBox(s[0],s[1]+' · '+ids.length+' 个关键节点',s[3],ids.map(id=>({id,label:by[id].n})),null,{overview:'依次点击下方阶段，卡片与关系线会随剧情切换。',all:ids,beats});update();document.getElementById('era-'+by[ids[0]].era).scrollIntoView({behavior:'smooth',block:'start'})}
+function battle(w){story=null;activePlot={id:w[0],kind:'battle'};activeBeat=-1;focus=null;pathResult=null;pathMode=false;regionView=false;mode='story';era='all';query='';document.getElementById('search').value='';const beats=plotWars[w[0]],ids=[...new Set([...w[5].split(' '),...beats.flatMap(b=>b[2].split(' '))])];roster=new Set(ids);detailBox(w[1],'《'+eras[w[2]][0]+'》 · '+w[4]+' · '+ids.length+' 个相关节点',w[6]+'<br>人物包含现场参与者与影响事件的幕后人物，具体身份见剧情阶段。',ids.map(id=>({id,label:by[id].n})),null,{overview:'按起因、交锋、结果逐步查看剧情。点击阶段后，只高亮该阶段涉及的角色与巨龙。',all:ids,beats});picked=w[3];paint();update()}
+function paint(){document.querySelectorAll('.land').forEach(el=>el.classList.toggle('active',el.dataset.geo===picked))}
+const geoPatterns={beyond:/塞外|长城/,north:/北境|临冬城|恐怖堡/,iron:/铁群岛|派克岛/,river:/河间地|奔流城|孪河城|赫伦堡/,vale:/谷地|鹰巢城/,west:/西境|凯岩城/,crown:/王领|君临|龙石岛|潮头岛/,reach:/河湾地|高庭|旧镇|阿什福德/,storm:/风暴地|风息堡|盛夏厅/,dorne:/多恩|阳戟城/,essos:/厄斯索斯|布拉佛斯|潘托斯/,steps:/石阶列岛/};
+function geo(name,description,key,rest,apply=true){picked=key;paint();const residents=P.filter(p=>geoPatterns[key]?.test(p.place)),humans=residents.filter(p=>p.kind==='person').length,dragons=residents.length-humans;document.getElementById('geoInfo').innerHTML='<strong>'+name+'</strong>'+description+(rest?'<br><span style="color:#9dc1c6">'+rest+'</span>':'')+'<br><span class="focus-counter">关联籍贯或主要活动地：'+humans+' 人'+(dragons?' · '+dragons+' 龙':'')+'</span>'+(residents.length?'<div class="geo-people">'+residents.slice(0,18).map(p=>'<button data-id="'+p.id+'">'+p.n+'</button>').join('')+'</div>':'');document.querySelectorAll('#geoInfo [data-id]').forEach(el=>el.onclick=()=>select(el.dataset.id,true));if(apply){focus=null;story=null;activePlot=null;activeBeat=-1;pathResult=null;pathMode=false;regionView=true;roster=new Set(residents.map(p=>p.id));mode='focus';era='all';query='';document.getElementById('search').value='';detail.classList.remove('show');update()}}
+document.querySelectorAll('.land').forEach(el=>el.onclick=()=>{const x=regions[el.dataset.geo];geo(x[0],x[1],el.dataset.geo,'主要势力：'+x[2]+' · 重要地点：'+x[3])});
+document.querySelectorAll('.mark[data-place]').forEach(el=>el.onclick=()=>{const x=sites[el.dataset.place];geo(x[0],x[1],x[2])});
+document.querySelectorAll('.mark[data-battle]').forEach(el=>el.onclick=()=>{const w=wars.find(w=>w[0]===el.dataset.battle);battle(w);geo(w[1],w[6],w[3],'《'+eras[w[2]][0]+'》 · '+w[4],false)});
+document.getElementById('stories').innerHTML=stories.map(s=>'<button class="story" data-story="'+s[0]+'">'+s[0]+'<small>'+s[1]+'</small></button>').join('');
+document.querySelectorAll('.story').forEach(el=>el.onclick=()=>trace(stories.find(s=>s[0]===el.dataset.story)));
+document.getElementById('battles').innerHTML=wars.map(w=>'<button class="waritem" data-war="'+w[0]+'">'+w[1]+'<small>'+w[4]+'</small></button>').join('');
+document.querySelectorAll('.waritem').forEach(el=>el.onclick=()=>battle(wars.find(w=>w[0]===el.dataset.war)));
+document.querySelectorAll('[data-era]').forEach(btn=>btn.onclick=()=>{era=btn.dataset.era;focus=null;story=null;activePlot=null;roster=null;regionView=false;pathResult=null;pathMode=false;detail.classList.remove('show');mode='focus';update()});
+document.querySelectorAll('[data-mode]').forEach(btn=>btn.onclick=()=>{mode=btn.dataset.mode;if(mode==='story'&&!roster)trace(stories[0]);else update()});
+document.getElementById('depth').onclick=ev=>{depth=depth===1?2:1;ev.target.textContent=depth===1?'一层关系':'两层关系';ev.target.classList.toggle('on',depth===2);update()};
+document.getElementById('isolate').onclick=()=>{isolated=!isolated;update()};
+document.getElementById('path').onclick=()=>{clear();pathMode=true;detailBox('两人关系路径','先选起点，再选终点','点击任意人物或巨龙作为起点；再点击另一个节点。路径按已勾选的线型计算，并会明确标出隔代血脉、师徒、同盟等关系。',[]);update()};
+document.querySelectorAll('#filters input').forEach(input=>input.onchange=()=>{if(input.checked)allowedTypes.add(input.value);else allowedTypes.delete(input.value);if(pathResult)showPath(pathResult.from,pathResult.to);else update()});
+document.getElementById('clear').onclick=clear;
+document.getElementById('search').oninput=ev=>{query=ev.target.value.trim().toLowerCase();if(query){era='all';focus=null;story=null;activePlot=null;roster=null;regionView=false;pathResult=null;pathMode=false;mode='focus';detail.classList.remove('show')}update()};
+let timer;window.addEventListener('resize',()=>{clearTimeout(timer);timer=setTimeout(update,100)});
+// A cast entry is checked against both show and actor. Guest appearances are checked separately.
+const photoDone=new Set(),photoQueued=new Set();
+function placePhoto(p,entry){const roleImage=entry?.character?.image?.medium,actorImage=entry?.person?.image?.medium,url=roleImage||actorImage;if(!url)return;photoQueued.add(p.id);const photo=new Image();photo.onload=()=>{const card=document.getElementById('person-'+p.id),img=card?.querySelector('img'),state=card?.querySelector('.portrait small');if(!img)return;img.src=url;img.alt=p.n+'——'+p.actor+'的公开'+(roleImage?'角色':'演员')+'照片';state.textContent=roleImage?'角色照':'演员照';photoDone.add(p.id);if(focus===p.id){const large=detail.querySelector('.dhead img');if(large)large.src=url}update()};photo.onerror=()=>photoQueued.delete(p.id);photo.src=url}
+async function api(path){const ctl=new AbortController(),timeout=setTimeout(()=>ctl.abort(),9500);try{const r=await fetch('https://api.tvmaze.com'+path,{signal:ctl.signal});return r.ok?await r.json():null}finally{clearTimeout(timeout)}}
+async function loadPhotos(){const shows={hotd:'House of the Dragon',knight:'A Knight of the Seven Kingdoms',got:'Game of Thrones'},norm=s=>(s||'').toLowerCase().replace(/[’'\-.\s]/g,'');let catalogueFailures=0;for(const [e,title] of Object.entries(shows)){try{const show=await api('/singlesearch/shows?q='+encodeURIComponent(title)+'&embed=cast');if(show?.name?.toLowerCase()!==title.toLowerCase())continue;let cast=show._embedded?.cast||[];
+// The Knight series lists most supporting actors as episode guests, not main cast.
+if(e==='knight'){const episodes=await api('/shows/'+show.id+'/episodes');if(episodes){for(const ep of episodes.filter(x=>x.season===1)){const guests=await api('/episodes/'+ep.id+'/guestcast');if(guests)cast=cast.concat(guests)}}}
+for(const p of P.filter(p=>p.era===e&&p.actor)){const matches=cast.filter(x=>norm(x.person?.name)===norm(p.actor));const match=matches.find(x=>!!x.character?.name&&(norm(x.character.name).includes(norm(p.en))||norm(p.en).includes(norm(x.character.name))))||matches[0];if(match)placePhoto(p,match)}
+}catch(error){catalogueFailures++}}
+// Actors missing from the show's cast catalogue can still have a verified TVmaze person portrait.
+if(catalogueFailures===3)return;
+const missing=P.filter(p=>p.actor&&!photoQueued.has(p.id));for(const p of missing){if(photoQueued.has(p.id))continue;try{const results=await api('/search/people?q='+encodeURIComponent(p.actor));const person=results?.find(x=>norm(x.person?.name)===norm(p.actor))?.person;if(person?.image)placePhoto(p,{person})}catch(error){}await new Promise(done=>setTimeout(done,520))}}
+render();loadPhotos();
+</script></body></html>
